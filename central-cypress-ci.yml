@@ -24,9 +24,9 @@ update_and_merge:
     - apt-get update -y
     - apt-get install -y git
   script:
-    - git config --global user.name "$GIT_USER_NAME"
-    - git config --global user.email "$GIT_USER_EMAIL"
-    - git remote set-url origin https://oauth2:${RENOVATE_TOKEN}@git.nevercodealone.de/testify-internal/cypress-io-roland-golla-de.git
+    - git config --global user.name "$GLOBAL_RENOVATE_USERNAME"
+    - git config --global user.email "$GLOBAL_RENOVATE_EMAIL"
+    - git remote set-url origin https://oauth2:${GLOBAL_RENOVATE_TOKEN}@${CI_REPOSITORY_URL#*@}
     - git fetch
     - if git rev-parse --verify update/npm-dependencies; then git checkout update/npm-dependencies && git reset --hard origin/main; else git checkout -b update/npm-dependencies; fi
     - npm update
