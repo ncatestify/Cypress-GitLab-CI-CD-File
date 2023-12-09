@@ -1,0 +1,1 @@
+# Cypress IO Gitlab file.
