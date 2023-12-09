@@ -37,9 +37,8 @@ update_and_merge:
     - git checkout main
     - git merge update/npm-dependencies
     - git push origin main
-  only:
-    variables:
-      - $UPDATE_TRIGGER == "true"
+  rules:
+    - if: '$UPDATE_TRIGGER == "true"'
   tags:
     - docker1
 
@@ -48,8 +47,19 @@ test_on_main:
   script:
     - npm ci
     - npx cypress run --record
-  only:
-    - main
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == "main"'
+  tags:
+    - docker1
+
+test_on_other_branches:
+  stage: test
+  script:
+    - npm ci
+    - npx cypress run
+  rules:
+    - if: '$CI_COMMIT_BRANCH != "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   tags:
     - docker1
 
