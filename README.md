@@ -24,7 +24,7 @@ This project provides a centralized, reusable GitLab CI/CD configuration for Cyp
 
    ```yaml
    include:
-     - project: 'namespace/central-repo'
+     - project: 'never-code-alone/cypress-gitlab-ci-cd-file'
        file: 'central-cypress-ci.yml'
        ref: 'main'
 
